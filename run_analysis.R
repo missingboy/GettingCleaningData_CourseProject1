@@ -2,7 +2,6 @@
 library(reshape2)
 
 ## Download, unzip and load data 
-setwd("D:/R/R-3.0.3/wd/")
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 if (!file.exists("./data")){dir.create("./data")}
 download.file(fileUrl,destfile="./data/smartphone.zip", method= "internal")
@@ -64,12 +63,10 @@ columnNames <- gsub("fBody","",columnNames)
 columnNames <- gsub("tBody","",columnNames)
 columnNames <- gsub("^[0-9] |^[0-9][0-9] |^[0-9][0-9][0-9] ","",columnNames)
 colnames(meanSD) <- columnNames
-write.table(meanSD, file="SamsungActivity.txt", row.names = FALSE, 
-            col.names=TRUE,sep="\t")
+write.table(meanSD, file="SamsungActivity.txt", row.names = FALSE, col.names=TRUE,sep="\t")
 
 ## Creates a second, independent tidy data set with the average of each 
 ## variable for each activity and each subject.
 meanSDl <- melt(meanSD,id=c("subject","activity"))
 meanSDw <- dcast (meanSDl, subject+activity~variable, mean)
-write.table(meanSD, file="SamsungActivityMean.txt", row.names = FALSE, 
-            col.names=TRUE,sep="\t")
+write.table(meanSDw, file="SamsungActivityMean.txt", row.names = FALSE, col.names=TRUE,sep="\t")
